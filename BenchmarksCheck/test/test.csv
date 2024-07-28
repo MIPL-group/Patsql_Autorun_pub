@@ -1,0 +1,6 @@
+Group,ID,Java-solution,Python-solution,Python-runtime,Java-runtime
+dataquest,1,Solved,Solved,200,250
+dataquest,2,Pending,Pending,90,100
+kaggle,2,Failed,Failed,180,300
+kaggle,1,Pending,Solved,150,200
+codecademy,1,Solved,Solved,110,-100

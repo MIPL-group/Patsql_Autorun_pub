@@ -1,0 +1,55 @@
+# Source: PATSQL-StackOverflow
+## Group: top_rated_posts
+### ID: 012
+
+# input:input0
+
+| ID:Str | DocumentID:Str | Status:Str | DateCreated:Str |
+|---|---|---|---|
+| 2 | 1 | S1 | 07/29/2011 |
+| 3 | 1 | S2 | 07/30/2011 |
+| 6 | 1 | S1 | 07/31/2011 |
+| 1 | 2 | S1 | 07/28/2011 |
+| 4 | 2 | S2 | 07/30/2011 |
+| 5 | 2 | S3 | 07/11/2011 |
+| 6 | 3 | S1 | 07/12/2011 |
+
+# constraint
+
+{
+  "constants": [],
+  "aggregation_functions": []
+}
+
+# output:output
+
+| DocumentID:Str | Status:Str | DateCreated:Str |
+|---|---|---|
+| 1 | S1 | 07/31/2011 |
+| 2 | S2 | 07/30/2011 |
+| 3 | S1 | 07/12/2011 |
+
+# solution
+
+```sql
+SELECT
+    T1.DocumentID,
+    T0.Status,
+    T0.DateCreated 
+FROM
+    input1 AS T0 
+JOIN
+    (
+        SELECT
+            DocumentID,
+            max(DateCreated) AS max_DateCreated 
+        FROM
+            input1 
+        GROUP BY
+            DocumentID
+    ) AS T1 
+        ON T1.DocumentID = T0.DocumentID 
+        AND T1.max_DateCreated = T0.DateCreated 
+ORDER BY
+    T1.DocumentID ASC
+```
