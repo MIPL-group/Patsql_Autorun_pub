@@ -1,0 +1,43 @@
+# Source: PATSQL-StackOverflow
+## Group: top_rated_posts
+### ID: 020
+
+# input:input0
+
+| TITLE:Str | DESCRIPTION:Str |
+|---|---|
+| test1 | value blah blah value |
+| test2 | value test |
+| test3 | test test test |
+| test4 | valuevaluevaluevaluevalue |
+
+# constraint
+
+{
+  "constants": [
+    "value"
+  ],
+  "aggregation_functions": []
+}
+
+# output:output
+
+| TITLE:Str | DESCRIPTION:Str | COUNT:Str |
+|---|---|---|
+| test1 | value blah blah value | 2 |
+| test2 | value test | 1 |
+| test3 | test test test | 0 |
+| test4 | valuevaluevaluevaluevalue | 5 |
+
+# solution
+
+```sql
+SELECT 
+    title,
+    description,
+    (
+        LENGTH(description)
+        - LENGTH( REPLACE ( description, "value", "") )
+    ) / LENGTH("value") AS count
+FROM <table>
+```
